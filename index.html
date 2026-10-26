@@ -627,6 +627,47 @@
       display: none;
     }
 
+    /* ---- ALWAYS DARK THEME + WHITE AMOUNTS (phone & desktop) ---- */
+    :root {
+      --cream: #1a0b18 !important;
+      --card: #2b1428 !important;
+      --ink: #f5ebf3 !important;
+      --ink-soft: #d8c6d4 !important;
+      --line: rgba(212, 175, 55, .30) !important;
+      color-scheme: dark;
+    }
+
+    .hstat .val,
+    .card .val,
+    .card .val.green,
+    .card .val.blue,
+    .flow .fbox .fval,
+    .flow .fbox.pos .fval,
+    .flow .fbox.hl .fval,
+    td.num,
+    tfoot td {
+      color: #fff !important;
+    }
+
+    .stitle h2,
+    .chart-card h3,
+    .seva-card h4 {
+      color: var(--gold-light);
+    }
+
+    tfoot td {
+      background: rgba(212, 175, 55, .16);
+    }
+
+    .toolbar input[type=text] {
+      background: var(--card);
+      color: var(--ink);
+    }
+
+    .chip {
+      background: var(--card);
+    }
+
     /* ---- MOBILE ---- */
     @media (max-width: 760px) {
 
@@ -731,6 +772,32 @@
 
     /* ---- PRINT ---- */
     @media print {
+
+      :root {
+        --cream: #fff !important;
+        --card: #fff !important;
+        --ink: #222 !important;
+        --ink-soft: #444 !important;
+        --line: #ccc !important;
+      }
+
+      .card .val,
+      .card .val.green,
+      .card .val.blue,
+      .flow .fbox .fval,
+      .flow .fbox.pos .fval,
+      td.num,
+      tfoot td,
+      .stitle h2,
+      .chart-card h3,
+      .seva-card h4 {
+        color: #4A1942 !important;
+      }
+
+      .hstat .val,
+      .flow .fbox.hl .fval {
+        color: #fff !important;
+      }
 
       body::before,
       nav,
@@ -1066,18 +1133,19 @@
     try {
       if (typeof Chart === 'undefined') throw new Error('Chart.js not available');
       Chart.defaults.font.family = "'Noto Sans Gujarati','Poppins',sans-serif";
-      Chart.defaults.color = '#5c4a58';
+      Chart.defaults.color = '#e8d9e5';
+      Chart.defaults.borderColor = 'rgba(255,255,255,.15)';
 
       new Chart(document.getElementById('chartMode'), {
         type: 'doughnut',
-        data: { labels: ['Cash', 'GPay / UPI'], datasets: [{ data: [cashTotal, gpayTotal], backgroundColor: ['#D4AF37', '#4A1942'], borderWidth: 2, borderColor: '#FAF3EA' }] },
+        data: { labels: ['Cash', 'GPay / UPI'], datasets: [{ data: [cashTotal, gpayTotal], backgroundColor: ['#D4AF37', '#C084FC'], borderWidth: 2, borderColor: '#2b1428' }] },
         options: { plugins: { legend: { position: 'bottom' } }, cutout: '62%' }
       });
 
       const expSorted = [...EXPENSES].sort((a, b) => b.amount - a.amount);
       new Chart(document.getElementById('chartExp'), {
         type: 'bar',
-        data: { labels: expSorted.map(e => e.item), datasets: [{ label: 'રકમ', data: expSorted.map(e => e.amount), backgroundColor: '#4A1942', borderRadius: 5 }] },
+        data: { labels: expSorted.map(e => e.item), datasets: [{ label: 'રકમ', data: expSorted.map(e => e.amount), backgroundColor: '#C084FC', borderRadius: 5 }] },
         options: { indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { ticks: { callback: v => '₹' + v } } } }
       });
 
